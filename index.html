@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giulia Casano CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a nautical chart. One plotted course (dashed line, waypoints with
+   real coordinates) carries the whole career; summary first, filters on top. */
+:root {
+  --bg: #f3f6f9;
+  --surface: #ffffff;
+  --ink: #0f2238;
+  --muted: #55677a;
+  --line: #d3dce5;
+  --accent: #d9481f;
+  --sea: #1b6a86;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1724; --surface: #11233a; --ink: #e9eff5; --muted: #94a6b8;
+    --line: #233a53; --accent: #ff7d52; --sea: #62b7d3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a1724; --surface: #11233a; --ink: #e9eff5; --muted: #94a6b8;
+  --line: #233a53; --accent: #ff7d52; --sea: #62b7d3;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+}
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 64px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.mono { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .02em; color: var(--muted); }
+
+/* Header */
+header { position: relative; padding: 40px 0 28px; overflow: hidden; }
+#sea { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; pointer-events: none; }
+.head-inner { position: relative; display: flex; flex-direction: column; gap: 14px; }
+h1 { font-size: clamp(44px, 11vw, 84px); font-weight: 800; line-height: .95; letter-spacing: -.02em; }
+h1 span { color: var(--accent); }
+.role { font-size: 19px; font-weight: 500; max-width: 34em; }
+.where { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.btn {
+  font: 600 15px var(--font-body); padding: 11px 18px; border-radius: 999px;
+  border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+  text-decoration: none; cursor: pointer;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn:focus-visible, .chip:focus-visible { outline: 3px solid var(--sea); outline-offset: 2px; }
+
+/* Summary tiles */
+.brief { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 36px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.tile b { display: block; font: 800 34px/1 var(--font-display); color: var(--sea); font-variant-numeric: tabular-nums; }
+.tile span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); }
+
+section { margin-top: 44px; }
+h2 { font-size: 28px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 6px; }
+.sub { color: var(--muted); max-width: 40em; margin-bottom: 16px; }
+
+/* Filters */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.chip {
+  font: 500 14px var(--font-body); padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--ink);
+}
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+
+/* Course */
+.course { list-style: none; margin: 0; padding: 0 0 0 26px; position: relative; display: flex; flex-direction: column; gap: 14px; }
+.course::before {
+  content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 0;
+  border-left: 2px dashed var(--sea); opacity: .6;
+}
+.wp { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; transition: opacity .25s; }
+.wp::before {
+  content: ""; position: absolute; left: -26px; top: 20px; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--bg); border: 3px solid var(--accent);
+}
+.wp.off { opacity: .28; }
+.wp-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 14px; }
+.wp h3 { font-size: 19px; font-weight: 700; margin: 4px 0 2px; }
+.wp .org { font-weight: 500; }
+.wp ul { margin: 8px 0 0; padding-left: 18px; }
+.wp li { margin: 2px 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tag { font: 500 11.5px var(--font-mono); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--sea); text-transform: uppercase; letter-spacing: .06em; }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.skill h3 { font-size: 17px; font-weight: 700; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.state { font: 500 11.5px var(--font-mono); padding: 3px 8px; border-radius: 999px; background: var(--accent); color: #fff; letter-spacing: .04em; }
+.state.calm { background: var(--sea); }
+.skill p { margin-top: 6px; color: var(--muted); font-size: 15px; }
+
+/* How I work */
+.how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.how div { border-top: 3px solid var(--accent); padding-top: 12px; }
+.how h3 { font-size: 18px; font-weight: 700; }
+.how p { margin-top: 4px; color: var(--muted); font-size: 15px; }
+
+/* Contact */
+.contact { background: var(--ink); color: var(--bg); border-radius: 18px; padding: 26px 22px; }
+.contact h2 { color: var(--bg); }
+.contact p { opacity: .8; max-width: 36em; }
+.contact-rows { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.row .mono { color: var(--bg); opacity: .65; min-width: 76px; }
+.row .val { font-weight: 500; overflow-wrap: anywhere; }
+.copy { font: 500 13px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--bg); background: transparent; color: var(--bg); cursor: pointer; }
+footer { margin-top: 28px; }
+
+@media (max-width: 640px) {
+  .brief, .how { grid-template-columns: 1fr; }
+  .skills { grid-template-columns: 1fr; }
+  .tile { display: flex; align-items: baseline; gap: 12px; }
+  .tile span { margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .wp { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <canvas id="sea" aria-hidden="true"></canvas>
+  <div class="head-inner">
+    <p class="mono">CURRICULUM VITAE · 44.65°N 10.93°E</p>
+    <h1>Giulia<br>Casano<span>.</span></h1>
+    <p class="role">Studentessa di Ingegneria Informatica. Organizzo persone e progetti, sperimento con l'IA, sto entrando nella cybersicurezza. Voglio lavorare nell'innovazione.</p>
+    <div class="where mono">
+      <span>BASE: MODENA</span><span>ORIGINE: PALERMO</span><span>CLASSE 2004</span>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="#contatti">Contattami</a>
+      <a class="btn" href="#rotta">Vedi il percorso</a>
+    </div>
+  </div>
+</header>
+
+<div class="brief" aria-label="In breve">
+  <div class="tile"><b>3</b><span>stagioni alla Lega Navale, 2 da responsabile</span></div>
+  <div class="tile"><b>3°</b><span>anno di Ingegneria Informatica, UniMore</span></div>
+  <div class="tile"><b>B2</b><span>inglese, in preparazione al C1</span></div>
+</div>
+
+<section id="rotta">
+  <h2>La rotta</h2>
+  <p class="sub">Dal più recente. Scegli cosa ti interessa e il resto passa in secondo piano.</p>
+  <div class="chips" role="group" aria-label="Filtra il percorso">
+    <button class="chip" id="f-all" data-f="all" aria-pressed="true">Tutto</button>
+    <button class="chip" id="f-lead" data-f="lead" aria-pressed="false">Leadership</button>
+    <button class="chip" id="f-tech" data-f="tech" aria-pressed="false">Tech</button>
+    <button class="chip" id="f-edu" data-f="edu" aria-pressed="false">Studi</button>
+  </div>
+
+  <ol class="course">
+    <li class="wp" data-t="lead tech">
+      <div class="wp-top"><span class="mono">13 NOV 2026</span><span class="mono">BOLOGNA · 44.49°N 11.34°E</span></div>
+      <h3>Open Day NTT DATA "Grow into the Future"</h3>
+      <p class="org">Partecipante al Tech Lab, workshop di gruppo</p>
+      <ul>
+        <li>Nel mio team ho avuto il ruolo di project manager: ho coordinato compiti e tempi.</li>
+      </ul>
+      <div class="tags"><span class="tag">Leadership</span><span class="tag">Tech</span></div>
+    </li>
+
+    <li class="wp" data-t="tech">
+      <div class="wp-top"><span class="mono">2026 · IN CORSO</span><span class="mono">ONLINE</span></div>
+      <h3>Cybersicurezza con TryHackMe</h3>
+      <p class="org">Formazione pratica autonoma</p>
+      <ul><li>Ho iniziato da poco i laboratori pratici di sicurezza informatica, e continuo.</li></ul>
+      <div class="tags"><span class="tag">Tech</span></div>
+    </li>
+
+    <li class="wp" data-t="edu tech">
+      <div class="wp-top"><span class="mono">2025 · IN CORSO</span><span class="mono">MODENA · 44.65°N 10.93°E</span></div>
+      <h3>Laurea Triennale in Ingegneria Informatica</h3>
+      <p class="org">Università degli Studi di Modena e Reggio Emilia</p>
+      <ul><li>Proseguo qui il percorso iniziato a Palermo.</li></ul>
+      <div class="tags"><span class="tag">Studi</span><span class="tag">Tech</span></div>
+    </li>
+
+    <li class="wp" data-t="lead tech">
+      <div class="wp-top"><span class="mono">ESTATI 2022 · 2024</span><span class="mono">PALERMO · 38.12°N 13.36°E</span></div>
+      <h3>Responsabile e istruttrice di vela</h3>
+      <p class="org">Lega Navale Italiana, Sezione di Palermo · scuola vela per bambini</p>
+      <ul>
+        <li>Tre stagioni consecutive, le ultime due da responsabile e organizzatrice.</li>
+        <li>Ho pianificato il calendario delle attività, organizzato le riunioni e coordinato gli istruttori.</li>
+        <li>Ho tenuto il registro di incassi e spese dei corsi: quote di iscrizione, carburante, costi dell'attività.</li>
+        <li>Ho seguito il progetto presenze della FIV (Federazione Italiana Vela): la rilevazione digitale degli allievi ha portato contributi federali alla Sezione.</li>
+        <li>Ho ideato e realizzato attività digitali interattive da fare a terra con i bambini.</li>
+        <li>Ho gestito gruppi di bambini in acqua, con la sicurezza al primo posto.</li>
+      </ul>
+      <div class="tags"><span class="tag">Leadership</span><span class="tag">Tech</span></div>
+    </li>
+
+    <li class="wp" data-t="edu tech">
+      <div class="wp-top"><span class="mono">2023 · 2025</span><span class="mono">PALERMO · 38.12°N 13.36°E</span></div>
+      <h3>Ingegneria Informatica, primo biennio</h3>
+      <p class="org">Università degli Studi di Palermo</p>
+      <div class="tags"><span class="tag">Studi</span><span class="tag">Tech</span></div>
+    </li>
+
+    <li class="wp" data-t="edu">
+      <div class="wp-top"><span class="mono">IN PAUSA</span><span class="mono">PALERMO · SECONDO ANNO</span></div>
+      <h3>Economia e Management, laurea triennale</h3>
+      <p class="org">Università degli Studi di Palermo</p>
+      <div class="tags"><span class="tag">Studi</span></div>
+    </li>
+
+    <li class="wp" data-t="edu">
+      <div class="wp-top"><span class="mono">2023</span><span class="mono">PALERMO</span></div>
+      <h3>Diploma di Liceo Scientifico</h3>
+      <p class="org">Liceo Scientifico "G. Galilei" · voto 79/100</p>
+      <ul><li>Al quarto anno sono passata dal Liceo Classico "G. Meli" allo Scientifico, e mi sono diplomata nei tempi previsti.</li></ul>
+      <div class="tags"><span class="tag">Studi</span></div>
+    </li>
+
+  </ol>
+</section>
+
+<section>
+  <h2>Competenze</h2>
+  <p class="sub">Dichiaro il livello reale di ognuna.</p>
+  <div class="skills">
+    <div class="skill"><h3>Organizzazione <span class="state calm">PROVATA SUL CAMPO</span></h3><p>Due stagioni da responsabile alla Lega Navale: calendario, riunioni, contabilità.</p></div>
+    <div class="skill"><h3>Intelligenza artificiale <span class="state calm">USO QUOTIDIANO</span></h3><p>Sperimento ogni giorno con strumenti di IA generativa.</p></div>
+    <div class="skill"><h3>Cybersicurezza <span class="state">IN CRESCITA</span></h3><p>Laboratori pratici su TryHackMe, iniziati da poco.</p></div>
+    <div class="skill"><h3>Programmazione <span class="state calm">JAVA · C++</span></h3><p>Java e C++ dal percorso di ingegneria. Python a livello base, in crescita. Uso GitHub.</p></div>
+    <div class="skill"><h3>Sviluppo web <span class="state calm">HTML · CSS</span></h3><p>HTML e CSS, con l'esame universitario di Full Stack Development già sostenuto.</p></div>
+    <div class="skill"><h3>Inglese <span class="state calm">B2</span></h3><p>Studio regolare con obiettivo C1. Italiano madrelingua.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Come lavoro</h2>
+  <div class="how">
+    <div><h3>Prendo il timone</h3><p>Quando serve qualcuno che organizzi e decida, mi faccio avanti.</p></div>
+    <div><h3>Sto in movimento</h3><p>Sono dinamica: preferisco fare, provare e correggere.</p></div>
+    <div><h3>Non mi fermo</h3><p>Sono determinata e intraprendente: ho cambiato liceo al quarto anno e sono arrivata in fondo.</p></div>
+  </div>
+</section>
+
+<section id="contatti">
+  <div class="contact">
+    <h2>Parliamone</h2>
+    <p>Cerco un ruolo tecnico nell'innovazione, su progetti sfidanti e in team.</p>
+    <div class="contact-rows">
+      <div class="row"><span class="mono">EMAIL</span><span class="val" id="email">giulia.casano29@gmail.com</span><button class="copy" id="copy-email" type="button">Copia</button></div>
+      <div class="row"><span class="mono">GITHUB</span><a class="val" href="https://github.com/giuliacasano" style="color:inherit">github.com/giuliacasano</a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="mono">Autorizzo il trattamento dei dati personali ai sensi del Regolamento UE 2016/679 (GDPR).</footer>
+</div>
+
+<script>
+// Filters: dim what does not match, never hide it.
+(function () {
+  var chips = document.querySelectorAll('.chip');
+  var items = document.querySelectorAll('.wp');
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      var f = c.dataset.f;
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      items.forEach(function (it) {
+        var on = f === 'all' || it.dataset.t.split(' ').indexOf(f) !== -1;
+        it.classList.toggle('off', !on);
+      });
+    });
+  });
+
+  var btn = document.getElementById('copy-email');
+  btn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    if (!navigator.clipboard) { btn.textContent = 'Seleziona e copia'; return; }
+    navigator.clipboard.writeText(text).then(
+      function () { btn.textContent = 'Copiata'; setTimeout(function () { btn.textContent = 'Copia'; }, 1600); },
+      function () { btn.textContent = 'Seleziona e copia'; }
+    );
+  });
+})();
+
+// Header: slow swell lines, like isobaths on a chart.
+(function () {
+  var cv = document.getElementById('sea');
+  var ctx = cv.getContext('2d');
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var w = 0, h = 0;
+  function size() {
+    var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+    w = r.width; h = r.height;
+    cv.width = w * d; cv.height = h * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--sea').trim() || '#1b6a86';
+    ctx.lineWidth = 1;
+    for (var i = 0; i < 7; i++) {
+      var base = h * 0.18 + i * (h * 0.13);
+      ctx.globalAlpha = 0.10 + i * 0.035;
+      ctx.beginPath();
+      for (var x = w * 0.42; x <= w; x += 6) {
+        var y = base + Math.sin(x * 0.012 + t * 0.0006 + i * 0.9) * (6 + i * 1.6)
+                     + Math.sin(x * 0.031 - t * 0.0004 + i) * 3;
+        if (x === w * 0.42) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    if (!still) requestAnimationFrame(draw);
+  }
+  size();
+  window.addEventListener('resize', function () { size(); if (still) draw(0); });
+  draw(0);
+})();
+</script>
+</body>
+</html>
